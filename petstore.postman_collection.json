@@ -12,7 +12,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -22,8 +24,14 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"code\": 200,\r\n  \"type\": \"jpeg\",\r\n  \"message\": \"additionalMetadata: test\\nFile uploaded to ./use case.png, 30351 bytes\"\r\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "завантаження (5).jpg"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,17 +39,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/1245/uploadImage",
-					"protocol": "https",
+					"raw": "{{api}}pet/1/uploadImage",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
-						"1245",
+						"1",
 						"uploadImage"
 					]
 				}
@@ -67,16 +70,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
-					"protocol": "https",
+					"raw": "{{api}}pet/findByStatus?status=available",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
 						"findByStatus"
 					],
 					"query": [
@@ -108,16 +106,41 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/1",
-					"protocol": "https",
+					"raw": "{{api}}pet/1",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find pet by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}pet/1",
+					"host": [
+						"{{api}}pet"
+					],
+					"path": [
 						"1"
 					]
 				}
@@ -143,16 +166,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/store/inventory",
-					"protocol": "https",
+					"raw": "{{api}}store/inventory",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}store"
 					],
 					"path": [
-						"v2",
-						"store",
 						"inventory"
 					]
 				}
@@ -178,18 +196,44 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/store/order/2",
-					"protocol": "https",
+					"raw": "{{api}}store/order/1",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}store"
 					],
 					"path": [
-						"v2",
-						"store",
 						"order",
-						"2"
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find purchase order by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}store/order/0",
+					"host": [
+						"{{api}}store"
+					],
+					"path": [
+						"order",
+						"0"
 					]
 				}
 			},
@@ -201,17 +245,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/user1",
-					"protocol": "https",
+					"raw": "{{api}}user/{{user}}",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}user"
 					],
 					"path": [
-						"v2",
-						"user",
-						"user1"
+						"{{user}}"
 					]
 				}
 			},
@@ -236,22 +275,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/login?username=user1&password=user",
-					"protocol": "https",
+					"raw": "{{api}}user/login?username={{user}}&password=user",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}user"
 					],
 					"path": [
-						"v2",
-						"user",
 						"login"
 					],
 					"query": [
 						{
 							"key": "username",
-							"value": "user1"
+							"value": "{{user}}"
 						},
 						{
 							"key": "password",
@@ -281,16 +315,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user/logout",
-					"protocol": "https",
+					"raw": "{{api}}user/logout",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}user"
 					],
 					"path": [
-						"v2",
-						"user",
 						"logout"
 					]
 				}
@@ -325,16 +354,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet",
-					"protocol": "https",
+					"raw": "{{api}}pet",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"pet"
+						"{{api}}pet"
 					]
 				}
 			},
@@ -342,6 +364,19 @@
 		},
 		{
 			"name": "Add a new pet to store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -355,16 +390,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet",
-					"protocol": "https",
+					"raw": "{{api}}pet",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"pet"
+						"{{api}}pet"
 					]
 				}
 			},
@@ -398,16 +426,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet",
-					"protocol": "https",
+					"raw": "{{api}}pet",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"pet"
+						"{{api}}pet"
 					]
 				}
 			},
@@ -441,16 +462,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet",
-					"protocol": "https",
+					"raw": "{{api}}pet",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"pet"
+						"{{api}}pet"
 					]
 				}
 			},
@@ -458,6 +472,19 @@
 		},
 		{
 			"name": "Update an existing pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -471,16 +498,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet",
-					"protocol": "https",
+					"raw": "{{api}}pet",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
-					],
-					"path": [
-						"v2",
-						"pet"
+						"{{api}}pet"
 					]
 				}
 			},
@@ -493,8 +513,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -520,17 +540,12 @@
 					]
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/2",
-					"protocol": "https",
+					"raw": "{{api}}pet/12",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
-						"2"
+						"12"
 					]
 				}
 			},
@@ -570,16 +585,11 @@
 					]
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/2",
-					"protocol": "https",
+					"raw": "{{api}}pet/2",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
 						"2"
 					]
 				}
@@ -588,6 +598,19 @@
 		},
 		{
 			"name": "Deletes a pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "apikey",
@@ -607,16 +630,11 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/99",
-					"protocol": "https",
+					"raw": "{{api}}pet/99",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
 						"99"
 					]
 				}
@@ -657,16 +675,11 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/pet/1",
-					"protocol": "https",
+					"raw": "{{api}}pet/1",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}pet"
 					],
 					"path": [
-						"v2",
-						"pet",
 						"1"
 					]
 				}
@@ -693,7 +706,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"lena\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"raw": "{{test_data}}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -701,16 +714,362 @@
 					}
 				},
 				"url": {
-					"raw": "https://petstore.swagger.io/v2/user",
-					"protocol": "https",
+					"raw": "{{api}}user",
 					"host": [
-						"petstore",
-						"swagger",
-						"io"
+						"{{api}}user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place an order for a pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"petId\": 0,\r\n  \"quantity\": 0,\r\n  \"shipDate\": \"2021-10-12T17:53:44.937Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}store/order",
+					"host": [
+						"{{api}}store"
 					],
 					"path": [
-						"v2",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete purchase order by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}store/order/3",
+					"host": [
+						"{{api}}store"
+					],
+					"path": [
+						"order",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete purchase order by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}store/order/99",
+					"host": [
+						"{{api}}store"
+					],
+					"path": [
+						"order",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create list of users with given input array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"username\": \"string\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"email\": \"string\",\r\n    \"password\": \"string\",\r\n    \"phone\": \"string\",\r\n    \"userStatus\": 0\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}user/createWithList",
+					"host": [
+						"{{api}}user"
+					],
+					"path": [
+						"createWithList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updated user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"string\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}user/user",
+					"host": [
+						"{{api}}user"
+					],
+					"path": [
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "2",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}user/user2",
+					"host": [
+						"{{api}}user"
+					],
+					"path": [
+						"user2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "api_key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}user/test",
+					"host": [
+						"{{api}}user"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "99",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}user/99",
+					"host": [
+						"{{api}}user"
+					],
+					"path": [
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creates a list of users with given ainput array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n{{test_data}}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}user/createWithArray",
+					"host": [
+						"{{api}}user"
+					],
+					"path": [
+						"createWithArray"
 					]
 				}
 			},
